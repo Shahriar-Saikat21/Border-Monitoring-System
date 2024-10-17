@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.btn {
+    @apply text-lg text-[#4caf50] border-2 border-[#4caf50] font-bold bg-white my-5 py-2 
+      block px-2 rounded-md hover:bg-[#4caf50] hover:text-[#ffffff]  
+      hover:border-2 hover:border-[#4caf50] md:w-1/2 w-full transition duration-300 ease-in font-primary;
+}
+  
+.formInput {
+    @apply px-2 py-1 w-full focus:outline-none font-primary;
+}
+
+.mobileNav{
+    @apply text-xl font-bold text-[#ffffff] cursor-pointer;
+}
+
+.pcNav{
+    @apply text-xl font-bold text-[#ffffff] cursor-pointer hover:text-yellow-400 transition ease-in-out duration-500;
+}
