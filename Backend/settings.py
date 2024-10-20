@@ -36,7 +36,9 @@ INSTALLED_APPS = [
     "corsheaders",
     'rest_framework',
 
-    'UserApi'
+    'UserApi',
+    'ObjectDetectApi',
+    'HistoryApi'
 ]
 
 MIDDLEWARE = [
@@ -78,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': env('DATABASE_NAME'),
         'USER': env('DATABASE_USER'),
-        'PASSWORD': '',
+        'PASSWORD': env('DATABASE_Password'),
         'HOST': env('DATABASE_HOST'),
         'PORT': env('DATABASE_PORT'),
     }
@@ -100,8 +102,8 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(minutes=5),
 }
 
 
