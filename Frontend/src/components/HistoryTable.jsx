@@ -22,6 +22,9 @@ export default function HistoryTable() {
                     <th scope="col" className="px-6 py-4">
                       Threat Level
                     </th>
+                    <th scope="col" className="px-6 py-4">
+                      Duty Staff
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="font-semibold text-primary">
@@ -32,6 +35,7 @@ export default function HistoryTable() {
                     <td className="whitespace-nowrap px-6 py-4">2024-10-01</td>
                     <td className="whitespace-nowrap px-6 py-4">00:03:04</td>
                     <td className="whitespace-nowrap px-6 py-4">Medium</td>
+                    <td className="whitespace-nowrap px-6 py-4">Col. Saikat</td>
                   </tr>
 
                   <tr className="border-b transition duration-300 ease-in-out hover:bg-gray-300 ">
@@ -41,6 +45,7 @@ export default function HistoryTable() {
                     <td className="whitespace-nowrap px-6 py-4">2024-10-01</td>
                     <td className="whitespace-nowrap px-6 py-4">00:03:04</td>
                     <td className="whitespace-nowrap px-6 py-4">Medium</td>
+                    <td className="whitespace-nowrap px-6 py-4">Col. Saikat</td>
                   </tr>
 
                   <tr className="border-b transition duration-300 ease-in-out hover:bg-gray-300 ">
@@ -50,6 +55,7 @@ export default function HistoryTable() {
                     <td className="whitespace-nowrap px-6 py-4">2024-10-01</td>
                     <td className="whitespace-nowrap px-6 py-4">00:03:04</td>
                     <td className="whitespace-nowrap px-6 py-4">High</td>
+                    <td className="whitespace-nowrap px-6 py-4">Col. Saikat</td>
                   </tr>
 
                   <tr className="border-b transition duration-300 ease-in-out hover:bg-gray-300 ">
@@ -59,6 +65,7 @@ export default function HistoryTable() {
                     <td className="whitespace-nowrap px-6 py-4">2024-10-01</td>
                     <td className="whitespace-nowrap px-6 py-4">00:03:04</td>
                     <td className="whitespace-nowrap px-6 py-4">Low</td>
+                    <td className="whitespace-nowrap px-6 py-4">Col. Saikat</td>
                   </tr>
                 </tbody>
               </table>

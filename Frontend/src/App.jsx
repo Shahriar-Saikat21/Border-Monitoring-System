@@ -3,6 +3,7 @@ import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 
 import Layout from './components/Layout';
+import PrivateRoute from "./components/PrivateRoute";
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import HistoryPage from './pages/HistoryPage';
@@ -15,8 +16,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout><LoginPage /></Layout>} />
-          <Route path="/home" element={<Layout><HomePage /></Layout>} />
-          <Route path="/history" element={<Layout><HistoryPage /></Layout>} />
+          <Route path="/home" element={<PrivateRoute><Layout><HomePage /></Layout></PrivateRoute>} />
+          <Route path="/history" element={<PrivateRoute><Layout><HistoryPage /></Layout></PrivateRoute>} />
 
           {/* <Route path="/*" element={<Layout><NoPage /></Layout>} /> */}
         </Routes>
