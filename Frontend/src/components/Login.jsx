@@ -13,7 +13,9 @@ const Login = () => {
   const useSubmit = async (data) => {
     try {
       const response = await loginUser(data);
-      if (response) {
+      if (response.data.success) {
+        sessionStorage.setItem("access_token",response.data.access_token)
+        sessionStorage.setItem("refresh_token",response.data.refresh_token)
         navigate('/home');
       } else {
         setLogError("Invalid User ID or Password !!!");

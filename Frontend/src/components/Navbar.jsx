@@ -15,7 +15,9 @@ const Navbar = () => {
   const handleLogout = async()=>{
     try {
       const response = await logoutUser();
-      if (response) {
+      if (response.data.success) {
+        sessionStorage.removeItem('access_token');
+        sessionStorage.removeItem('refresh_token');
         navigate('/');
       } else {
         alert("An error occurred. Please try again.");

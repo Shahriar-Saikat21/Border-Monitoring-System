@@ -1,7 +1,5 @@
 from django.shortcuts import render
 
-from rest_framework_simplejwt.tokens import RefreshToken
-
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from .serializer import UserSerializer, CustomTokenObtainPairSerializer
@@ -19,6 +17,7 @@ def login_view(request):
 
         # Authenticate user
         user = authenticate(request, username=username, password=password)
+
         if user is not None:
             serializer = CustomTokenObtainPairSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)
@@ -28,59 +27,17 @@ def login_view(request):
             access_token = tokens['access']
             refresh_token = tokens['refresh']
 
-            res = Response()
+            return Response({
+                'success' : True,
+                'access_token' : access_token,
+                'refresh_token' : refresh_token,
+            })
 
-            res.data = {'success':True}
-
-            res.set_cookie(
-                key='access_token',
-                value=access_token,
-                httponly=True,
-                secure=False,  # Change to True in production with HTTPS
-                samesite='None',
-                path='/'
-            )
-
-            res.set_cookie(
-                key='refresh_token',
-                value=refresh_token,
-                httponly=True,
-                secure=False,  # Change to True in production with HTTPS
-                samesite='None',
-                path='/'
-            )
-
-            return res
         else:
             return Response({'success':False})
     except Exception as e:
             print(e)
             return Response({'success':False})
-
-        
-@api_view(['POST'])
-def refresh_token_view(request):
-    try:
-        refresh_token = request.COOKIES.get('refresh_token')
-        if refresh_token:
-            new_access_token = RefreshToken(refresh_token).access_token
-            res = Response()
-            res.data = {'success': True}
-
-            res.set_cookie(
-                key='access_token',
-                value=new_access_token,
-                httponly=True,
-                secure=False,
-                samesite='None',
-                path='/'
-            )
-            return res
-        else:
-            return Response({'success': False})
-    except Exception as e:
-        print(e)
-        return Response({'success': False})
 
 
 @api_view(['GET'])
@@ -102,20 +59,9 @@ def getAuthUser(request):
 @permission_classes([IsAuthenticated])
 def logout_view(request):
     try:
-        res = Response()
-        res.delete_cookie('access_token', path='/', samesite='None')
-        res.delete_cookie('refresh_token', path='/', samesite='None')
-        res.data = {'success':True}
-
-        return res
-
+        return Response({'success':True})
     except Exception as e:
         print(e)
         return Response({'success':False})
-    
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def is_loggedin_view(request):
-    return Response({'success':True})
 

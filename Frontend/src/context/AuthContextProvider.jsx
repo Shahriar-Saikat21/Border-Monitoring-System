@@ -8,7 +8,7 @@ const AuthContextProvider = ({children})=>{
 
     const loginUser = async(data)=>{
         const response = await login(data);
-        if(response){
+        if(response.data.success){
             setAuth(true);
         }
         return response
@@ -16,7 +16,7 @@ const AuthContextProvider = ({children})=>{
 
     const logoutUser = async ()=>{
         const response = await logout();
-        if(response){
+        if(response.data.success){
             setAuth(false);
         }
         return response
