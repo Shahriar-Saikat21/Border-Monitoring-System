@@ -1,26 +1,30 @@
 from django.shortcuts import render
 
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from django.contrib.auth.models import User
-from .serializer import UserSerializer
+from django.contrib.auth import authenticate
+from .serializer import UserSerializer, CustomTokenObtainPairSerializer
 
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-class CustomTokenObtainPairView(TokenObtainPairView):
-    def post(self, request, *args, **kwargs):
-        try:
-            # Get the response from the parent class method
-            response = super().post(request, *args, **kwargs)
-            tokens = response.data
+@api_view(['POST'])
+def login_view(request):
+    try:
+        username = request.data.get('username')
+        password = request.data.get('password')
 
-            # Get access and refresh tokens from response data
+        # Authenticate user
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            serializer = CustomTokenObtainPairSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            tokens = serializer.validated_data
+            
+            # Set tokens in HttpOnly cookies
             access_token = tokens['access']
             refresh_token = tokens['refresh']
 
@@ -47,41 +51,36 @@ class CustomTokenObtainPairView(TokenObtainPairView):
             )
 
             return res
-        
-        except Exception as e:
+        else:
+            return Response({'success':False})
+    except Exception as e:
             print(e)
             return Response({'success':False})
+
         
-
-class CustomTokenRefreshView(TokenRefreshView):
-    def post(self, request, *args, **kwargs):
-        try:
-            refresh_token = request.COOKIES.get('refresh_token')
-
-            request.data['refresh'] = refresh_token
-
-            response = super().post(request, *args, **kwargs)
-            
-            tokens = response.data
-            access_token = tokens['access']
-
+@api_view(['POST'])
+def refresh_token_view(request):
+    try:
+        refresh_token = request.COOKIES.get('refresh_token')
+        if refresh_token:
+            new_access_token = RefreshToken(refresh_token).access_token
             res = Response()
-
-            res.data = {'refreshed': True}
+            res.data = {'success': True}
 
             res.set_cookie(
                 key='access_token',
-                value=access_token,
+                value=new_access_token,
                 httponly=True,
                 secure=False,
                 samesite='None',
                 path='/'
             )
             return res
-
-        except Exception as e:
-            print(e)
+        else:
             return Response({'success': False})
+    except Exception as e:
+        print(e)
+        return Response({'success': False})
 
 
 @api_view(['GET'])
@@ -101,16 +100,22 @@ def getAuthUser(request):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def logout(request):
+def logout_view(request):
     try:
         res = Response()
-        res.data = {'success':True}
         res.delete_cookie('access_token', path='/', samesite='None')
         res.delete_cookie('refresh_token', path='/', samesite='None')
+        res.data = {'success':True}
 
         return res
 
     except Exception as e:
         print(e)
         return Response({'success':False})
+    
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def is_loggedin_view(request):
+    return Response({'success':True})
 

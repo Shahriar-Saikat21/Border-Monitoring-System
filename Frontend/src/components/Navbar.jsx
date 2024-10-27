@@ -2,10 +2,28 @@ import logo from '../assets/logo.png';
 import {useState} from 'react'
 import { NavLink} from "react-router-dom";
 import { HiOutlineBars4,HiOutlineXMark } from "react-icons/hi2";
+import {useContext} from 'react'
+import AuthContext from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const[toggle,setToggle]=useState(false);
   const toggleHandler=()=>{setToggle(!toggle)};
+  const {logoutUser}  = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = async()=>{
+    try {
+      const response = await logoutUser();
+      if (response) {
+        navigate('/');
+      } else {
+        alert("An error occurred. Please try again.");
+      }
+    } catch (error) {
+      alert("An error occurred. Please try again.....");
+    } 
+  }
 
   return (
     <nav className="bg-[#4caf50] fixed w-full h-[60px] z-50">
@@ -18,7 +36,7 @@ const Navbar = () => {
         <ul className="hidden md:flex justify-center items-center gap-4 ">
           <NavLink to={"/home"}className=" pcNav">Dashboard</NavLink>
           <NavLink to={"/history"}className=" pcNav">History</NavLink>
-          <NavLink to={"/"}className=" pcNav">Logout</NavLink>
+          <NavLink className=" pcNav" onClick={handleLogout}>Logout</NavLink>
         </ul>
         <div className='md:hidden' onClick={toggleHandler}>
           {
@@ -31,7 +49,7 @@ const Navbar = () => {
           <ul className=" p-5 flex flex-col gap-2">
             <NavLink to={"/home"} className=" mobileNav">Dashboard</NavLink>
             <NavLink to={"/history"} className=" mobileNav">History</NavLink>
-            <NavLink to={"/"} className=" mobileNav">Logout</NavLink>      
+            <NavLink className=" mobileNav" onClick={handleLogout}>Logout</NavLink>      
           </ul>
         </div>       
       </div>

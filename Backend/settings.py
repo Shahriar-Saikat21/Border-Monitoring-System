@@ -20,7 +20,7 @@ SECRET_KEY = 'django-insecure-7clszfletij##sdt($qlzn%z@3^8v+payi5y#r^b4#2ek&!a&n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -43,9 +43,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     "corsheaders.middleware.CorsMiddleware",
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',  
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -87,16 +87,22 @@ DATABASES = {
     }
 }
 
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:5173",
-# ]
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOWS_CREDENTIALS = True
+SESSION_COOKIE_SAMESITE = 'None'  # Set this for cross-origin access
+SESSION_COOKIE_SECURE = False  # Set to True in production
+CSRF_COOKIE_SAMESITE = 'None'
+CSRF_COOKIE_SECURE = False
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOW_CREDENTIALS = True
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        # "rest_framework_simplejwt.authentication.JWTAuthentication",
-        "UserApi.authentication.CookiesJWTAuthentication", 
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'UserApi.authentication.CustomJWTAuthentication', 
     ),
     # "DEFAULT_PERMISSION_CLASSES": [
     #     "rest_framework.permissions.IsAuthenticated",
@@ -105,16 +111,10 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=1),
-    "REFRESH_TOKEN_LIFETIME": timedelta(minutes=5),
-    "ROTATE_REFRESH_TOKENS": False,
-    "BLACKLIST_AFTER_ROTATION": False,
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": False,
-    'AUTH_COOKIE': 'access_token',  # Cookie name for the access token
-    'AUTH_COOKIE_REFRESH': 'refresh_token',  # Cookie name for the refresh token
-    'AUTH_COOKIE_SECURE': False,  # Set to True if using HTTPS
-    'AUTH_COOKIE_HTTP_ONLY': True,  # Make the cookie HTTP only
-    'AUTH_COOKIE_PATH': '/',  # Root path for the cookie
-    'AUTH_COOKIE_SAMESITE': 'Lax',  # Adjust according to your needs
 
 }
 

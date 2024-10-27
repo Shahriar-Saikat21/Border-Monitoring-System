@@ -1,10 +1,10 @@
-import React from 'react';
+import {useContext} from 'react';
 import { Navigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
+import AuthContext from './../context/AuthContext';
 
 const PrivateRoute = ({ children }) => {
-  const token = Cookies.get('access_token');
-  return token ? children : <Navigate to="/" />;
+  const {auth} = useContext(AuthContext)
+  return auth ? children : <Navigate to="/" />;
 };
 
 export default PrivateRoute;
