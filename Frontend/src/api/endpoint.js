@@ -14,9 +14,10 @@ export const login = async (data)=>{
 
 export const logout = async () => {
     try {
+        const refreshToken = sessionStorage.getItem('refresh_token');
         const response = await axiosInstance.post(
             'api/logout/', 
-            {},  // An empty object as the body for a POST request
+            {refresh_token: refreshToken},  
             { withCredentials: true }  // Set withCredentials in the config, not in the body
         );
         return response;
