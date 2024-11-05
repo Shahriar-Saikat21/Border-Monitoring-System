@@ -18,4 +18,12 @@ def getObjectDetection(request):
                                      content_type='multipart/x-mixed-replace; boundary=frame')
     except requests.RequestException as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    return Response()
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getStream(request):
+    try:
+        return Response({'success':True, 'URL':'http://127.0.0.1:8000/stream/streaming/'})
+    except:
+        return Response({'success':False})

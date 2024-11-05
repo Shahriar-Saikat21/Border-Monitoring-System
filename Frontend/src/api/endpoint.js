@@ -26,3 +26,13 @@ export const logout = async () => {
         return false;
     }
 };
+
+export const getStream = async ()=>{
+    try{
+        const response = await axiosInstance.get('stream/streamURL/');
+        return response;
+    }catch(error){
+        console.log(error)
+        return false;
+    } 
+};

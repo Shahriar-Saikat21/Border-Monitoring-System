@@ -1,4 +1,4 @@
-import {useState,useEffect} from 'react'
+import {useState} from 'react'
 import AuthContext from './AuthContext'
 import {login,logout} from '../api/endpoint'
 

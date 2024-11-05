@@ -40,21 +40,6 @@ def login_view(request):
             return Response({'success':False})
 
 
-@api_view(['GET'])
-def getUser(request):
-    user = User.objects.all()
-    serializer = UserSerializer(user, many = True)
-    return Response(serializer.data)
-
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def getAuthUser(request):
-    user = User.objects.all()
-    serializer = UserSerializer(user, many = True)
-    return Response(serializer.data)
-
-
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def logout_view(request):
