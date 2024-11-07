@@ -36,3 +36,13 @@ export const getStream = async ()=>{
         return false;
     } 
 };
+
+export const is_authenticate = async ()=>{
+    try{
+        const response = await axiosInstance.post('api/is_authenticated/',{});
+        return response;
+    }catch(error){
+        console.log(error)
+        return false;
+    } 
+};

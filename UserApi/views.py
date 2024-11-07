@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from .serializer import UserSerializer, CustomTokenObtainPairSerializer
+from .serializer import CustomTokenObtainPairSerializer
 
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import api_view, permission_classes
@@ -51,5 +51,14 @@ def logout_view(request):
     except Exception as e:
         print(e)
         return Response({'success':False})
+    
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def is_authenticated(request):
+    try:
+        return Response({'success':True})
+    except Exception as e:
+        print(e)
+        return Response({'success':False})
 
