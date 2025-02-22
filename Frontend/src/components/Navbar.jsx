@@ -37,7 +37,7 @@ const Navbar = () => {
         
         <ul className="hidden md:flex justify-center items-center gap-4 ">
           <NavLink to={"/home"}className=" pcNav">Dashboard</NavLink>
-          <NavLink to={"/history"}className=" pcNav">History</NavLink>
+          {/* <NavLink to={"/history"}className=" pcNav">History</NavLink> */}
           <NavLink className=" pcNav" onClick={handleLogout}>Logout</NavLink>
         </ul>
         <div className='md:hidden' onClick={toggleHandler}>
@@ -50,7 +50,7 @@ const Navbar = () => {
         <div className={toggle?'absolute bg-[#4caf50] w-full md:hidden border-b top-[60px] left-0':'hidden'}>
           <ul className=" p-5 flex flex-col gap-2">
             <NavLink to={"/home"} className=" mobileNav">Dashboard</NavLink>
-            <NavLink to={"/history"} className=" mobileNav">History</NavLink>
+            {/* <NavLink to={"/history"} className=" mobileNav">History</NavLink> */}
             <NavLink className=" mobileNav" onClick={handleLogout}>Logout</NavLink>      
           </ul>
         </div>       

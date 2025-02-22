@@ -20,6 +20,7 @@ export default function VideoPlayer() {
   return streamUrl ? (
     <div className="mt-16 md:mt-[100px] px-4 md:px-[100px]  w-full md:w-3/4">
       <div className="relative pb-[56.25%] h-0 overflow-hidden">
+        {console.log(streamUrl)}
         <img
           src={streamUrl}
           alt="Video Stream"
@@ -30,6 +31,7 @@ export default function VideoPlayer() {
   ) : (
     <div className="mt-16 md:mt-[100px] px-4 md:px-[100px]  w-full md:w-3/4">
       <div className="relative pb-[56.25%] h-0 overflow-hidden">
+        {console.log(1)}
         <p>Loading video...</p>
       </div>
     </div>

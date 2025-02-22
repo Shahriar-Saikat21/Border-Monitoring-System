@@ -18,7 +18,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Layout><LoginPage /></Layout>} />
             <Route path="/home" element={<PrivateRoute><Layout><HomePage /></Layout></PrivateRoute>} />
-            <Route path="/history" element={<PrivateRoute><Layout><HistoryPage /></Layout></PrivateRoute>} />
+            {/* <Route path="/history" element={<PrivateRoute><Layout><HistoryPage /></Layout></PrivateRoute>} /> */}
           </Routes>
         </AuthContextProvider>
       </BrowserRouter>

@@ -6,7 +6,7 @@ export default function HomePage() {
     <div>
         <div className="bg-[#F0F0F0] flex md:flex-row flex-col min-h-screen">
           <VideoPlayer/>
-          <Notification/>
+          {/* <Notification/> */}
         </div>    
     </div>
   )
